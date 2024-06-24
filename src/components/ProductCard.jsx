@@ -17,12 +17,12 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg m-4 relative">
+    <div className="max-w-sm rounded overflow-hidden shadow-lg m-4 relative cursor-pointer">
       <img className="w-full h-64 object-cover" src={product.image} alt={product.title} />
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">{product.title}</div>
+      <div className="px-6 py-4 h-40  ">
+        <div className="font-bold text-xl mb-2 lineClamp overflow-hidden  h-20">{product.title.substring(0, 70)}</div>
         <p className="text-gray-700 text-base">
-          {product.description.substring(0, 100)}...
+          {product.description.substring(0, 70)}...
         </p>
       </div>
       <div className="px-6 pt-4 pb-2 flex justify-between items-center">

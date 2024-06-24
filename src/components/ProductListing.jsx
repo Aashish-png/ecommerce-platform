@@ -46,7 +46,8 @@ const ProductListing = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-4  pb-16 " >
+      {/*  h-[86vh]  h-[86dvh] overflow-auto w-full */}
       {offline && <p>You are currently offline. Showing cached data.</p>}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {products.map(product => (
