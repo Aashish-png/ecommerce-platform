@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
-
+import ShimmerCard from './ShimmerCard ';
 const ProductListing = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [offline, setOffline] = useState(!navigator.onLine);
 
   useEffect(() => {
@@ -17,25 +18,36 @@ const ProductListing = () => {
         const data = await response.json();
         setProducts(data);
         setOffline(false);
+        setLoading(false);
+        localStorage.setItem('products', JSON.stringify(data));
       } catch (error) {
         console.error('Error fetching products:', error);
-        setOffline(true); // Set offline mode if fetch fails
-        // Attempt to fetch from cache
-        const cacheResponse = await caches.match('https://fakestoreapi.com/products');
-        if (cacheResponse) {
-          const cacheData = await cacheResponse.json();
-          setProducts(cacheData);
-        } else {
-          console.error('Error fetching cached products.');
+        const cachedProducts = localStorage.getItem('products');
+        if (cachedProducts) {
+          setProducts(JSON.parse(cachedProducts));
         }
+        setOffline(true);
+        setLoading(false);
       }
     };
 
-    fetchProducts();
+    if (navigator.onLine) {
+      fetchProducts();
+    } else {
+      const cachedProducts = localStorage.getItem('products');
+      if (cachedProducts) {
+        setProducts(JSON.parse(cachedProducts));
+        setLoading(false);
+      }
+      setOffline(true);
+    }
 
-    // Listen for network status changes
-    const handleOnline = () => setOffline(false);
+    const handleOnline = () => {
+      setOffline(false);
+      fetchProducts();
+    };
     const handleOffline = () => setOffline(true);
+
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
 
@@ -46,13 +58,14 @@ const ProductListing = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-4  pb-16 " >
-      {/*  h-[86vh]  h-[86dvh] overflow-auto w-full */}
+    <div className="container mx-auto px-4 pb-16">
       {offline && <p>You are currently offline. Showing cached data.</p>}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {products.map(product => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        {loading ? (
+          Array(8).fill('').map((_, index) => <ShimmerCard key={index} />)
+        ) : (
+          products.map(product => <ProductCard key={product.id} product={product} />)
+        )}
       </div>
     </div>
   );

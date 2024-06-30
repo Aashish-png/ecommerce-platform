@@ -1,9 +1,7 @@
-// serviceWorker.js
 
 const CACHE_NAME = 'ecommerce-cache-v1';
 
 self.addEventListener('install', event => {
-  console.log('Service Worker installed');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -16,7 +14,6 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
-  console.log('Fetch event intercepted:', event.request.url);
   event.respondWith(
     caches.match(event.request)
       .then(response => {
