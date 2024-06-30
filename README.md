@@ -1,8 +1,22 @@
-# React + Vite
+steps to run the project 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+fork or download the repo in your local env 
 
-Currently, two official plugins are available:
+open it in vs code 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+do npm i  
+
+after that just do npm run dev to run the project 
+
+
+===============for PWA ====================
+
+do npm run build first 
+
+then npm run preview 
+
+you can check offline feature by turning off your wifi and the page data will still be there 
+
+//===============deployed live link===============================
+
+https://ecommerce-platform-xi.vercel.app/
